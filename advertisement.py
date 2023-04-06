@@ -22,6 +22,8 @@ SOFTWARE.
 import dbus
 import dbus.service
 
+import sys
+
 from bletools import BleTools
 
 BLUEZ_SERVICE_NAME = "org.bluez"
@@ -120,8 +122,9 @@ class Advertisement(dbus.service.Object):
     def register_ad_callback(self):
         print("GATT advertisement registered")
 
-    def register_ad_error_callback(self):
-        print("Failed to register GATT advertisement")
+    def register_ad_error_callback(self, error):
+        print("Failed to register GATT advertisement: " + str(error))
+        sys.exit(1)
 
     def register(self):
         bus = BleTools.get_bus()
